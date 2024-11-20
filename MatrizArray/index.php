@@ -1,10 +1,8 @@
-<php
+<?php
 //Algoritmo
 
 
 //Modulo
-?>
-
 
 
 
