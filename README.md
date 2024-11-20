@@ -1,8 +1,8 @@
 <PROGRAMA PRINCIPAL>
-anio<-arreglo()
-mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
-Temp<-arreglo()
-ALGORITMO CargaAutomatica
+    anio<-arreglo()
+    mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
+    Temp<-arreglo()
+    ALGORITMO CargaAutomatica
     // Declarar la matriz bidimensional para almacenar las temperaturas
     MATRIZ temperaturas[10][12]
 
@@ -34,4 +34,47 @@ ALGORITMO CargaAutomatica
     SINO
         MOSTRAR "Año o mes fuera de rango."
     FIN SI
+    FIN ALGORITMO
+
+
+   ALGORITMO ConsultarTemperaturasPorAnio
+    // Parámetro: Año (2014 a 2023)
+    ENTRADA año
+
+    // Calcular el índice de la fila (año - 2014)
+    fila ← año - 2014
+
+    // Verificar si el índice es válido
+    SI fila >= 0 Y fila < 10 ENTONCES
+        MOSTRAR "Las temperaturas del año ", año, " son:"
+        PARA columna DESDE 0 HASTA 11 HACER
+            MOSTRAR "Mes ", columna + 1, ": ", temperaturas[fila][columna]
+        FIN PARA
+    SINO
+        MOSTRAR "Año fuera de rango."
+    FIN SI
 FIN ALGORITMO
+
+ALGORITMO ConsultarTemperaturasPorMes
+    // Parámetro: Mes (1 a 12)
+    ENTRADA mes
+    SALIDA promedio
+
+    // Calcular el índice de la columna (mes - 1)
+    columna ← mes - 1
+    suma ← 0
+
+    // Verificar si el índice es válido
+    SI columna >= 0 Y columna < 12 ENTONCES
+        MOSTRAR "Las temperaturas del mes ", mes, " son:"
+        PARA fila DESDE 0 HASTA 9 HACER
+            MOSTRAR "Año ", 2014 + fila, ": ", temperaturas[fila][columna]
+            suma ← suma + temperaturas[fila][columna]
+        FIN PARA
+        promedio ← suma / 10
+        MOSTRAR "Promedio de temperaturas en el mes ", mes, ": ", promedio
+    SINO
+        MOSTRAR "Mes fuera de rango."
+    FIN SI
+FIN ALGORITMO
+
