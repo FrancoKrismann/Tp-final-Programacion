@@ -1,9 +1,17 @@
 <PROGRAMA PRINCIPAL>
+    entero anio
+    string mes
+    entero temp
     anio<-arreglo()
-    mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
+    mes<-arreglo()
     Temp<-arreglo()
-    ALGORITMO CargaAutomatica
-    // Declarar la matriz bidimensional para almacenar las temperaturas
+    string cargAut
+    Escribir ¿Cargar automaticamente?(s/n)
+    leer cargAut
+    Si cargAut=s entonces 
+    anio<-arreglo(2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023)
+    mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
+
     MATRIZ temperaturas[10][12]
 
     // Llenar la matriz con los datos proporcionados
@@ -15,7 +23,15 @@
         [32, 30, 28, 22, 17, 12, 9, 13, 16, 20, 24, 30],
         [32, 30, 27, 23, 19, 14, 12, 11, 17, 23, 25, 29],
         [31, 29, 28, 21, 19, 13, 10, 12, 
+Sino
+Escribir Cuatos años
+leer anio
 
+escribir cuantos meses
+leer Meses
+
+Escribir cargar temperatura
+leer temp
 <MODULOS>
     
     ALGORITMO ConsultarTemperaturaPorAnioYMes
