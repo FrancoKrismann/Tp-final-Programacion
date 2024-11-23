@@ -1,95 +1,131 @@
-<PROGRAMA PRINCIPAL>
-    entero anio
-    string mes
-    entero temp
-    anio<-arreglo()
-    mes<-arreglo()
-    Temp<-arreglo()
-    string cargAut
-    Escribir ¿Cargar automaticamente?(s/n)
-    leer cargAut
-    Si cargAut=s entonces 
-    anio<-arreglo(2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023)
-    mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
+INICIO
+    // Definir la matriz de temperaturas de 10 años, con 12 meses por año
+    matrizTemperatura = [
+        [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29], // 2014
+        [33, 30, 27, 22, 19, 13, 11, 15, 18, 21, 26, 31], // 2015
+        [34, 32, 29, 21, 18, 14, 12, 16, 18, 21, 27, 32], // 2016
+        [33, 31, 28, 22, 18, 13, 11, 14, 17, 22, 26, 31], // 2017
+        [32, 30, 28, 22, 17, 12, 9, 13, 16, 20, 24, 30],  // 2018
+        [32, 30, 27, 23, 19, 14, 12, 11, 17, 23, 25, 29], // 2019
+        [31, 29, 28, 21, 19, 13, 10, 12, 16, 22, 27, 29], // 2020
+        [30, 28, 26, 20, 16, 12, 11, 13, 17, 21, 28, 30], // 2021
+        [31, 29, 27, 21, 17, 12, 11, 15, 18, 22, 26, 30], // 2022
+        [32, 30, 27, 20, 16, 13, 13, 15, 19, 23, 28, 31]  // 2023
+    ]
 
-    MATRIZ temperaturas[10][12]
+    // Menú de opciones
+    ESCRIBIR "Menú de opciones:"
+    ESCRIBIR "1. Carga automática"
+    ESCRIBIR "2. Carga manual"
+    ESCRIBIR "3. Mostrar contenido de la matriz"
+    ESCRIBIR "4. Mostrar temperatura de un año y mes"
+    ESCRIBIR "5. Mostrar temperaturas de todos los meses de un año"
+    ESCRIBIR "6. Mostrar temperaturas de todos los años de un mes"
+    ESCRIBIR "7. Hallar máximas y mínimas"
+    ESCRIBIR "8. Datos de primavera"
+    ESCRIBIR "9. Datos de invierno"
+    ESCRIBIR "10. Mostrar arreglos completos"
 
-    // Llenar la matriz con los datos proporcionados
-    temperaturas ← [
-        [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29],
-        [33, 30, 27, 22, 19, 13, 11, 15, 18, 21, 26, 31],
-        [34, 32, 29, 21, 18, 14, 12, 16, 18, 21, 27, 32],
-        [33, 31, 28, 22, 18, 13, 11, 14, 17, 22, 26, 31],
-        [32, 30, 28, 22, 17, 12, 9, 13, 16, 20, 24, 30],
-        [32, 30, 27, 23, 19, 14, 12, 11, 17, 23, 25, 29],
-        [31, 29, 28, 21, 19, 13, 10, 12, 
-Sino
-Escribir Cuatos años
-leer anio
+    LEER opción del usuario
 
-escribir cuantos meses
-leer Meses
-
-Escribir cargar temperatura
-leer temp
-<MODULOS>
-    
-    ALGORITMO ConsultarTemperaturaPorAnioYMes
-    // Parámetros: Año (2014 a 2023) y Mes (1 a 12)
-    ENTRADA año, mes
-    SALIDA temperatura
-
-    // Calcular el índice de la fila (año - 2014) y de la columna (mes - 1)
-    fila ← año - 2014
-    columna ← mes - 1
-
-    // Verificar si los índices son válidos
-    SI fila >= 0 Y fila < 10 Y columna >= 0 Y columna < 12 ENTONCES
-        temperatura ← temperaturas[fila][columna]
-        MOSTRAR "La temperatura en el año ", año, " y mes ", mes, " es: ", temperatura
-    SINO
-        MOSTRAR "Año o mes fuera de rango."
+    SI opción = 1 ENTONCES
+        // Carga automática
+        matrizTemperatura = [
+            [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29],
+            [33, 30, 27, 22, 19, 13, 11, 15, 18, 21, 26, 31],
+            [34, 32, 29, 21, 18, 14, 12, 16, 18, 21, 27, 32],
+            [33, 31, 28, 22, 18, 13, 11, 14, 17, 22, 26, 31],
+            [32, 30, 28, 22, 17, 12, 9, 13, 16, 20, 24, 30],
+            [32, 30, 27, 23, 19, 14, 12, 11, 17, 23, 25, 29],
+            [31, 29, 28, 21, 19, 13, 10, 12, 16, 22, 27, 29],
+            [30, 28, 26, 20, 16, 12, 11, 13, 17, 21, 28, 30],
+            [31, 29, 27, 21, 17, 12, 11, 15, 18, 22, 26, 30],
+            [32, 30, 27, 20, 16, 13, 13, 15, 19, 23, 28, 31]
+        ]
+        MOSTRAR "Carga automática completada."
     FIN SI
-    FIN ALGORITMO
 
-
-   ALGORITMO ConsultarTemperaturasPorAnio
-    // Parámetro: Año (2014 a 2023)
-    ENTRADA año
-
-    // Calcular el índice de la fila (año - 2014)
-    fila ← año - 2014
-
-    // Verificar si el índice es válido
-    SI fila >= 0 Y fila < 10 ENTONCES
-        MOSTRAR "Las temperaturas del año ", año, " son:"
-        PARA columna DESDE 0 HASTA 11 HACER
-            MOSTRAR "Mes ", columna + 1, ": ", temperaturas[fila][columna]
+    SI opción = 2 ENTONCES
+        // Carga manual
+        PARA año = 0 HASTA 9 HACER
+            PARA mes = 0 HASTA 11 HACER
+                LEER temperatura
+                matrizTemperatura[año][mes] = temperatura
+            FIN PARA
         FIN PARA
-    SINO
-        MOSTRAR "Año fuera de rango."
+        MOSTRAR "Carga manual completada."
     FIN SI
-FIN ALGORITMO
 
-ALGORITMO ConsultarTemperaturasPorMes
-    // Parámetro: Mes (1 a 12)
-    ENTRADA mes
-    SALIDA promedio
-
-    // Calcular el índice de la columna (mes - 1)
-    columna ← mes - 1
-    suma ← 0
-
-    // Verificar si el índice es válido
-    SI columna >= 0 Y columna < 12 ENTONCES
-        MOSTRAR "Las temperaturas del mes ", mes, " son:"
-        PARA fila DESDE 0 HASTA 9 HACER
-            MOSTRAR "Año ", 2014 + fila, ": ", temperaturas[fila][columna]
-            suma ← suma + temperaturas[fila][columna]
+    SI opción = 3 ENTONCES
+        // Mostrar la matriz
+        PARA año = 0 HASTA 9 HACER
+            MOSTRAR "Año " + (año + 2014) + ": " + matrizTemperatura[año]
         FIN PARA
-        promedio ← suma / 10
-        MOSTRAR "Promedio de temperaturas en el mes ", mes, ": ", promedio
-    SINO
-        MOSTRAR "Mes fuera de rango."
     FIN SI
-FIN ALGORITMO
+
+    SI opción = 4 ENTONCES
+        // Mostrar temperatura de un año y mes
+        LEER año, mes
+        MOSTRAR "Temperatura en " + (año) + " para el mes " + (mes) + " es: " + matrizTemperatura[año-2014][mes-1]
+    FIN SI
+
+    SI opción = 5 ENTONCES
+        // Mostrar temperaturas de todos los meses de un año
+        LEER año
+        MOSTRAR "Temperaturas en el año " + año + ": " + matrizTemperatura[año-2014]
+    FIN SI
+
+    SI opción = 6 ENTONCES
+        // Mostrar temperaturas de todos los años de un mes
+        LEER mes
+        PARA año = 0 HASTA 9 HACER
+            MOSTRAR "Temperatura en el mes " + mes + " del año " + (año+2014) + " es: " + matrizTemperatura[año][mes-1]
+        FIN PARA
+    FIN SI
+
+    SI opción = 7 ENTONCES
+        // Hallar máximas y mínimas
+        maximo = -9999
+        minimo = 9999
+        PARA año = 0 HASTA 9 HACER
+            PARA mes = 0 HASTA 11 HACER
+                SI matrizTemperatura[año][mes] > maximo ENTONCES
+                    maximo = matrizTemperatura[año][mes]
+                    añoMaximo = año
+                    mesMaximo = mes
+                FIN SI
+                SI matrizTemperatura[año][mes] < minimo ENTONCES
+                    minimo = matrizTemperatura[año][mes]
+                    añoMinimo = año
+                    mesMinimo = mes
+                FIN SI
+            FIN PARA
+        FIN PARA
+        MOSTRAR "Máxima: " + maximo + " Año: " + (añoMaximo + 2014) + " Mes: " + (mesMaximo + 1)
+        MOSTRAR "Mínima: " + minimo + " Año: " + (añoMinimo + 2014) + " Mes: " + (mesMinimo + 1)
+    FIN SI
+
+    SI opción = 8 ENTONCES
+        // Mostrar datos de primavera (octubre, noviembre, diciembre)
+        primavera = []
+        PARA año = 0 HASTA 9 HACER
+            primavera[año] = [matrizTemperatura[año][9], matrizTemperatura[año][10], matrizTemperatura[año][11]]
+        FIN PARA
+        MOSTRAR primavera
+    FIN SI
+
+    SI opción = 9 ENTONCES
+        // Mostrar datos de invierno (julio, agosto, septiembre)
+        invierno = []
+        PARA año = 0 HASTA 9 HACER
+            invierno[año] = [matrizTemperatura[año][6], matrizTemperatura[año][7], matrizTemperatura[año][8]]
+        FIN PARA
+        MOSTRAR invierno
+    FIN SI
+
+    SI opción = 10 ENTONCES
+        // Mostrar arreglo completo
+        arregloCompleto = ["completa" : matrizTemperatura, "primavera" : primavera, "invierno" : invierno]
+        MOSTRAR arregloCompleto
+    FIN SI
+FIN
