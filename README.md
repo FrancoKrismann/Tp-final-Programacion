@@ -33,7 +33,7 @@ leer Meses
 Escribir cargar temperatura
 leer temp
 
-Fin si
+Fin Si
 
 <MODULOS>
     
