@@ -10,7 +10,7 @@
     leer cargAut
     Si cargAut=s entonces 
     anio<-arreglo(2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023)
-    mes<-arreglo(ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic)
+    mes<-arreglo(ene=>1,feb=>2,mar=>3,abr=>4,may=>5,jun=62,jul=>7,ago=>8,sep=>9,oct=>10,nov=>11,dic=>12)
 
     MATRIZ temperaturas[10][12]
 
@@ -32,6 +32,9 @@ leer Meses
 
 Escribir cargar temperatura
 leer temp
+
+Fin Si
+
 <MODULOS>
     
     ALGORITMO ConsultarTemperaturaPorAnioYMes
@@ -94,3 +97,9 @@ ALGORITMO ConsultarTemperaturasPorMes
     FIN SI
 FIN ALGORITMO
 
+
+Algoritmo MuestraMatriz
+
+
+Matriz<-muestra
+Si 
