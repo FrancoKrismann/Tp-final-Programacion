@@ -17,15 +17,43 @@ $cargTipo = trim(fgets(STDIN)); // Leer y eliminar espacios en blanco adicionale
 // Llamar a la función tipoCarga y pasar la matriz por referencia
 tipoCarga($cargTipo, $años, $meses, $matrizTemperatura);
 
+$primavera = [
+    "Primavera" => []
+];
+
+$invierno = [
+    "Invierno" => []
+];
+
+// for ($i=0; $i < count($matrizTemperatura); $i++) { 
+//     // for ($j=0; $j < count($matrizTemperatura);$j++){
+//     // }
+//     $dataOct = $matrizTemperatura[$i][9];
+//     $dataNov = $matrizTemperatura[$i][10];
+//     $dataDic = $matrizTemperatura[$i][11];
+//     $primavera["Primavera"][$años[$i]] = ["Octubre" => $dataOct, "Noviembre" => $dataNov, "Diciembre" => $dataDic];
+
+// }
+
+for ($i=5; $i < count($matrizTemperatura); $i++) { 
+    // for ($j=0; $j < count($matrizTemperatura);$j++){
+    // }
+    $dataOct = $matrizTemperatura[$i][6];
+    $dataNov = $matrizTemperatura[$i][7];
+    $dataDic = $matrizTemperatura[$i][8];
+    $invierno["Invierno"][$años[$i]] = ["Julio" => $dataOct, "Agosto" => $dataNov, "Septiembre" => $dataDic];
+
+}
+
 // Mostrar la matriz generada (para verificar)
-print_r($matrizTemperatura);
+print_r($invierno);
 
 // Función tipoCarga
 function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
     if (strtoupper($tipo) === "AUTOMATICO") {
         // Carga automática
         $datosAutomatica = [
-            [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29], // 2014
+            [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29], // 2014 - 0
             [33, 30, 27, 22, 19, 13, 11, 15, 18, 21, 26, 31], // 2015
             [34, 32, 29, 21, 18, 14, 12, 16, 18, 21, 27, 32], // 2016
             [33, 31, 28, 22, 18, 13, 11, 14, 17, 22, 26, 31], // 2017

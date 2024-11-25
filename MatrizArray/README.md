@@ -1,13 +1,11 @@
 INICIO ALGORITMO
-
-ENTERO opcionUsuario
-ENTERO añoIterador
-ENTERO mesIterador
+ENTERO opcionUsuario,año
+STRING mes, tipoArray
 matrizTemperatura <-- [10][12]
 STRING cargTipo
+[]matrizSeleccionada
 años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-
 
     ESCRIBIR "Tipo de carga de Temperatura(Manual/Automatico)"
     LEER(cargTipo)
@@ -22,41 +20,34 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
     ESCRIBIR "5. Hallar máximas y mínimas"
     ESCRIBIR "6. Datos de primavera"
     ESCRIBIR "7. Datos de invierno"
-    ESCRIBIR "8. Mostrar arreglos completos"
+    ESCRIBIR "8. Mostrar matriz completa"
 
     LEER(opcionUsuario)
 
+   
 
-
-
-    SI opción = 3 ENTONCES
-        // Mostrar la matriz
+<!-- CONDIONES DE SEGUN LA OPCION ELEGIDA -->
+    SI (opción = 1) ENTONCES
+        <!-- Mostrar la matriz -->
         PARA año = 0 HASTA 9 HACER
             MOSTRAR "Año " + (año + 2014) + ": " + matrizTemperatura[año]
         FIN PARA
-    FIN SI
-
-    SI opción = 4 ENTONCES
-        // Mostrar temperatura de un año y mes
+    OTRO-SI (opción = 2) ENTONCES
+        <!-- Mostrar temperatura de un año y mes -->
+        <!-- MODIFICARLO -->
         LEER año, mes
         MOSTRAR "Temperatura en " + (año) + " para el mes " + (mes) + " es: " + matrizTemperatura[año-2014][mes-1]
-    FIN SI
-
-    SI opción = 5 ENTONCES
+    OTRO-SI (opcion = 3) ENTONCES
         // Mostrar temperaturas de todos los meses de un año
         LEER año
         MOSTRAR "Temperaturas en el año " + año + ": " + matrizTemperatura[año-2014]
-    FIN SI
-
-    SI opción = 6 ENTONCES
+    OTRO-SI (opción = 4) ENTONCES
         // Mostrar temperaturas de todos los años de un mes
         LEER mes
         PARA año = 0 HASTA 9 HACER
             MOSTRAR "Temperatura en el mes " + mes + " del año " + (año+2014) + " es: " + matrizTemperatura[año][mes-1]
         FIN PARA
-    FIN SI
-
-    SI opción = 7 ENTONCES
+    OTRO-SI (opción = 5) ENTONCES 
         // Hallar máximas y mínimas
         maximo = -9999
         minimo = 9999
@@ -76,36 +67,57 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
         FIN PARA
         MOSTRAR "Máxima: " + maximo + " Año: " + (añoMaximo + 2014) + " Mes: " + (mesMaximo + 1)
         MOSTRAR "Mínima: " + minimo + " Año: " + (añoMinimo + 2014) + " Mes: " + (mesMinimo + 1)
+    OTRO-SI( opcion = 6 OR opcion = 7 OR opcion = 8) ENTONCES
+        ESCRIBIR("Seleccione el tipo de matriz(COMPLETA/PRIMAVERA/INVIERNO)")
+        LEER(tipoArray)
+        matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
+        ESCRIBIR("Matriz de tipo: " + tipoArray)
+        ESCRIBIR(matrizSeleccionada)
     FIN SI
 
-    SI opción = 8 ENTONCES
-        // Mostrar datos de primavera (octubre, noviembre, diciembre)
-        primavera = []
-        PARA año = 0 HASTA 9 HACER
-            primavera[año] = [matrizTemperatura[año][9], matrizTemperatura[año][10], matrizTemperatura[año][11]]
-        FIN PARA
-        MOSTRAR primavera
-    FIN SI
 
-    SI opción = 9 ENTONCES
-        // Mostrar datos de invierno (julio, agosto, septiembre)
-        invierno = []
-        PARA año = 0 HASTA 9 HACER
-            invierno[año] = [matrizTemperatura[año][6], matrizTemperatura[año][7], matrizTemperatura[año][8]]
-        FIN PARA
-        MOSTRAR invierno
-    FIN SI
-
-    SI opción = 10 ENTONCES
-        // Mostrar arreglo completo
-        arregloCompleto = ["completa" : matrizTemperatura, "primavera" : primavera, "invierno" : invierno]
-        MOSTRAR arregloCompleto
-    FIN SI
 
 FIN
 
 <!-- MODULO PARA CARGAR LA MATRIZ DE TEMPERATURAS -->
 
+ 
+    MODULO tipoMatriz(STRING tipoMatriz, []años, [][]matrizTemperatura) RETORNA []
+        ENTERO dataOct, dataNov, dataDic, dataJul, data,Agost,dataSept
+        primavera <-- ["Primavera" --> []]
+        invierno <-- ["Invierno" --> []]
+        arrayMultiple <-- [ "Completa" --> [], "Primavera" --> [], "Invierno" --> []]
+        seleccionMatriz <-- []
+        <!-- Hasta 11 o 12? -->
+            PARA i <-- 0 DESDE 0 HASTA 11 PASO 1 HACER
+                dataOct <-- matrizTemperatura[i][9]
+                dataNov <-- matrizTemperatura[i][10]
+                dataDic <-- matrizTemperatura[i][11]
+                primavera["Primavera"][años[i]] = ["Octubre" => dataOct, "Noviembre" => dataNov, "Diciembre" => dataDic]
+            FIN PARA
+            PARA i <-- 5 DESDE 0 HASTA 11 PASO 1 HACER
+                dataJul <-- matrizTemperatura[i][6]
+                dataAgost <-- matrizTemperatura[i][7]
+                dataSept <-- matrizTemperatura[i][8]
+                primavera["Primavera"][años[i]] = ["Julio" => dataJul, "Octubre" => dataAgost, "Septiembre" => dataSept]
+            FIN PARA
+        
+        arrayMultiple["Completa"][] = matrizTemperatura
+        arrayMultiple["Primavera"][] = primavera["Primavera"][]
+        arrayMultiple["Invierno"][] = invierno["Invierno"][]
+        
+        Si (tipoMatriz == "Completa") ENTONCES 
+            seleccionMatriz <-- arrayMultiple["Completa"][]
+        OTRO-SI (tipoMatriz == "Primavera") ENTONCES 
+            seleccionMatriz <-- arrayMultiple["Primavera"][]
+        SINO
+            seleccionMatriz <-- arrayMultiple["Invierno"][]
+        FIN SI
+
+        RETORNA seleccionMatriz
+        
+    FIN MODULO
+    
     MODULO tipoCarga(STRING tipo, []años, []meses, [][]matrizTemperatura)
 
     SI (tipo = "AUTOMATICO") ENTONCES
