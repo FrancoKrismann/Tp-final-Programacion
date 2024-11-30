@@ -155,5 +155,5 @@ respuesta=""
         matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
         respuesta<--"Matriz de tipo: " + tipoArraymatrizSeleccionada
     FIN SI
-
+cocacola
 FIN ALGORITMO
