@@ -1,11 +1,11 @@
-INICIO ALGORITMO
-ENTERO opcion,año
-STRING mes, tipoArray
-matrizTemperatura <-- [10][12]
-STRING cargTipo, continuar
-[]matrizSeleccionada
-años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
-meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    INICIO ALGORITMO
+    ENTERO opcion,año
+    STRING mes, tipoArray
+    matrizTemperatura <-- [10][12]
+    STRING cargTipo, continuar
+    []matrizSeleccionada
+    años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+    meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 
     Repetir
     ESCRIBIR "Tipo de carga de Temperatura(Manual/Automatico)"
@@ -62,7 +62,7 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
     FIN SI
 
       Escribir respuesta
-      Escribir "Desea Continuar?(s/n)"
+      Escribir "Desea repetir?(s/n)"
       HASTA (continuar = n)
 
     <!-- MODULO PARA CARGAR LA MATRIZ DE TEMPERATURAS -->
@@ -146,20 +146,20 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
     FIN PARA
     FIN MODULO
 
-   MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
+    MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
     ENTERO fila <-- año - 2014
     ENTERO columna <-- mes - 1
     ESCRIBIR "Temperatura de " + año + " en el mes " + mes + ": " + temperaturas[fila][columna]
-FIN MODULO
+    FIN MODULO
 
 
-   MODULO mostrarTemperaturasAnuales(MATRIZ temperaturas, ENTERO año)
+    MODULO mostrarTemperaturasAnuales(MATRIZ temperaturas, ENTERO año)
     ENTERO fila <-- año - 2014
     ESCRIBIR "Temperaturas del año " + año + ": " + temperaturas[fila]
-FIN MODULO
+    FIN MODULO
 
 
- MODULO mostrarTemperaturasMensuales(MATRIZ temperaturas, ENTERO mes)
+    MODULO mostrarTemperaturasMensuales(MATRIZ temperaturas, ENTERO mes)
     ENTERO columna <-- mes - 1
     ENTERO suma <-- 0
     PARA i = 0 HASTA 9 HACER
@@ -168,10 +168,10 @@ FIN MODULO
     FIN PARA
     REAL promedio <-- suma / 10
     ESCRIBIR "Promedio del mes " + mes + ": " + promedio
-FIN MODULO
+    FIN MODULO
 
     
- MODULO hallarExtremos(MATRIZ temperaturas)
+    MODULO hallarExtremos(MATRIZ temperaturas)
     ENTERO max <-- -9999, min <-- 9999
     ENTERO añoMax, mesMax, añoMin, mesMin
     PARA i = 0 HASTA 9 HACER
@@ -187,25 +187,11 @@ FIN MODULO
                 mesMin <-- j
             FIN SI
         FIN PARA
- 7-programacion-php
     FIN PARA
     ESCRIBIR "Máximo: " + max + " Año: " + (2014 + añoMax) + " Mes: " + (mesMax + 1)
     ESCRIBIR "Mínimo: " + min + " Año: " + (2014 + añoMin) + " Mes: " + (mesMin + 1)
-FIN MODULO
+    FIN MODULO
 
 
-        respuesta<- "Máxima: " + maximo + " Año: " + (añoMaximo + 2014) + " Mes: " + (mesMaximo + 1) "Y Mínima: " + minimo + " Año: " + (añoMinimo + 2014) + " Mes: " + (mesMinimo + 1)
-    OTRO-SI( opcion = 6 OR opcion = 7 OR opcion = 8) ENTONCES
-        SI (opcion=6)
-        tipoArray<--"Primavera"
-        OTRO SI(opcion=7)
-        tipoArray<--"Invierno"
-        SINO
-        tipoArray<--"Completa"
-        FIN SI
-        matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
-        respuesta<--"Matriz de tipo: " + tipoArraymatrizSeleccionada
-    FIN SI
-cocacola
- main
-FIN ALGORITMO
+
+    FIN ALGORITMO
