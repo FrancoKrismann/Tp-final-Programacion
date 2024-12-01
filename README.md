@@ -26,83 +26,93 @@
 
     SI (opcion = 1) ENTONCES
         <!-- Mostrar la matriz -->
-            mostrarMatrizCompleta(matrizTemperatura, años)
+             matrizCompleta <-- mostrarMatrizCompleta(matrizTemperatura, años)
+            mostrarMatriz(matrizCompleta,años)
     OTRO-SI (opcion = 2) ENTONCES
         <!-- Mostrar temperatura de un año y mes -->
                 ESCRIBIR ("Ingrese el año")
                 LEER(año)
                 ESCRIBIR("Ingrese el mes")
                 LEER(mes)
-                mostrarTemperatura(temperaturas, año, mes)
+                tempEspecifica <--- mostrarTemperatura(temperaturas, año, mes)
+                mostrarMatriz(tempEspecifica ,años)
     OTRO-SI (opcion = 3) ENTONCES
         // Mostrar temperaturas de todos los meses de un año
         ESCRIBIR "Ingrese el año:"
-         LEER año
-        mostrarTemperaturasAnuales()
+        LEER(año)
+        tempAnual <-- mostrarTemperaturasAnuales()
+        mostrarMatriz(tempAnual, años)
     OTRO-SI (opcion = 4) ENTONCES
         // Mostrar temperaturas de todos los años de un mes
         Escribir "Ingrese el mes:"
-        LEER mes
-        mostrarTemperaturasMensuales()
-        FIN PARA
+        LEER (mes)
+        tempMensual <-- mostrarTemperaturasMensuales()
+        mostrarMatriz(tempMensual,años)
     OTRO-SI (opcion = 5) ENTONCES 
         // Hallar máximas y mínimas
-        hallarExtremos()
-      
-    OTRO-SI( opcion = 6 OR opcion = 7 OR opcion = 8) ENTONCES
-        SI (opcion=6)  
-        tipoArray<--"Primavera"
-        OTRO-SI(opcion=7)
-        tipoArray<--"Invierno"
-        SINO
-        tipoArray<--"Completa"
-        FIN SI
-        matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
-        respuesta<--"Matriz de tipo: " + tipoArraymatrizSeleccionada
+        crearExtremos <-- hallarExtremos()
+        mostrarMatriz(crearExtremos, años)
+    OTRO-SI(opcion = 6) ENTONCES 
+       //Tipo matriz Primavera
+        matrizPrimavera <-- crearMatrizPrimavera(matrizTemperaturas)
+        mostrarMatriz(matrizPrimavera, años)
+    OTRO-SI(opcion = 7) ENTONCES 
+        //Tipo matrix Invierno
+        crearMatrizInvierno <-- crearMatrizPrimavera(matrizTemperaturas)
+        mostrarMatriz(crearMatrizInvierno, años)
+    
+    OTRO-SI(opcion = 8) ENTONCES
+          arregloAsociativo <-- crearArregloAsociativo(matrizTemperaturas)
+        mostrarArregloAsociativo(arregloAsociativo)
     FIN SI
 
       Escribir respuesta
       Escribir "Desea repetir?(s/n)"
       HASTA (continuar = n)
 
-    <!-- MODULO PARA CARGAR LA MATRIZ DE TEMPERATURAS -->
+MODULOS:
+
+    MODULO mostrarMatriz(matriz, años)
+    cantMatriz <-- cant(matriz)
+    PARA i <-- 0 DESDE 0 HASTA cantMatriz  HACER          
+            PARA j <-- 0 DESDE 0 HASTA cantMatriz  HACER
+               ESCRIBIR( años[i], ": ", matriz[j])
+        FIN PARA
+    FIN PARA
+    FIN MODULO
+
+
+    MODULO crearMatrizPrimavera([][]matrizTemperatura) RETORNA [][]ENTERO
+       matrizPrimavera[10][3]                                                                                                                                                    
+        PARA i <-- 0 DESDE 0 HASTA 9 PASO 1 HACER
+                matrizPrimavera[i][0] <-- matrizTemperatura[i][9]                                                                
+                matrizPrimavera[i][1] <-- matrizTemperatura[i][10]
+                matrizPrimavera[i][2] <-- matrizTemperatura[i][11]
+            FIN PARA
+            RETORNAR matrizPrimavera
+    FIN MODULO
+
+    MODULO crearMatrizInvierno([][]matrizTemperatura) RETORNA [][]ENTERO
+      matrizInvierno[5][3]
+      PARA i <-- 4 DESDE 4 HASTA 9 PASO 1 HACER
+            PARA j <-- 0 DESDE 0 HASTA 4 PASO 1 HACER
+                matrizInvierno[j][0] <-- matrizTemperatura[i][9]                                                                
+                matrizInvierno[j][1] <-- matrizTemperatura[i][10]
+                matrizInvierno[j][2] <-- matrizTemperatura[i][11]
+            FIN PARA
+            RETORNAR matrizInvierno
+
+    FIN MODULO
 
  
-    MODULO tipoMatriz(STRING tipoMatriz, []años, [][]matrizTemperatura) RETORNA []
-        ENTERO dataOct, dataNov, dataDic, dataJul, data,Agost,dataSept
-        primavera <-- ["Primavera" --> []]
-        invierno <-- ["Invierno" --> []]
-        arrayMultiple <-- [ "Completa" --> [], "Primavera" --> [], "Invierno" --> []]
-        seleccionMatriz <-- []
-        <!-- Hasta 11 o 12? -->
-            PARA i <-- 0 DESDE 0 HASTA 11 PASO 1 HACER
-                dataOct <-- matrizTemperatura[i][9]
-                dataNov <-- matrizTemperatura[i][10]
-                dataDic <-- matrizTemperatura[i][11]
-                primavera["Primavera"][años[i]] = ["Octubre" => dataOct, "Noviembre" => dataNov, "Diciembre" => dataDic]
-            FIN PARA
-            PARA i <-- 5 DESDE 0 HASTA 11 PASO 1 HACER
-                dataJul <-- matrizTemperatura[i][6]
-                dataAgost <-- matrizTemperatura[i][7]
-                dataSept <-- matrizTemperatura[i][8]
-                primavera["Primavera"][años[i]] = ["Julio" => dataJul, "Octubre" => dataAgost, "Septiembre" => dataSept]
-            FIN PARA
-        
-        arrayMultiple["Completa"][] = matrizTemperatura
-        arrayMultiple["Primavera"][] = primavera["Primavera"][]
-        arrayMultiple["Invierno"][] = invierno["Invierno"][]
-        
-        Si (tipoMatriz == "Completa") ENTONCES 
-            seleccionMatriz <-- arrayMultiple["Completa"][]
-        OTRO-SI (tipoMatriz == "Primavera") ENTONCES 
-            seleccionMatriz <-- arrayMultiple["Primavera"][]
-        SINO
-            seleccionMatriz <-- arrayMultiple["Invierno"][]
-        FIN SI
-
-        RETORNA seleccionMatriz
-        
+    MODULO crearArregloAsociativo(matriz) RETORNA []ENTERO
+     []arreglo 
+    arreglo["Completa"] <-- matriz
+    arreglo["Primavera"] <-- crearMatrizPrimavera(matriz)
+    arreglo["Invierno"] <-- crearMatrizInvierno(matriz)
+    RETORNAR arreglo
     FIN MODULO
+
     
     MODULO tipoCarga(STRING tipo, []años, []meses, [][]matrizTemperatura)
 
