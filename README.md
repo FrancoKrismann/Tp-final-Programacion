@@ -187,9 +187,25 @@ FIN MODULO
                 mesMin <-- j
             FIN SI
         FIN PARA
+ 7-programacion-php
     FIN PARA
     ESCRIBIR "Máximo: " + max + " Año: " + (2014 + añoMax) + " Mes: " + (mesMax + 1)
     ESCRIBIR "Mínimo: " + min + " Año: " + (2014 + añoMin) + " Mes: " + (mesMin + 1)
 FIN MODULO
 
+
+        respuesta<- "Máxima: " + maximo + " Año: " + (añoMaximo + 2014) + " Mes: " + (mesMaximo + 1) "Y Mínima: " + minimo + " Año: " + (añoMinimo + 2014) + " Mes: " + (mesMinimo + 1)
+    OTRO-SI( opcion = 6 OR opcion = 7 OR opcion = 8) ENTONCES
+        SI (opcion=6)
+        tipoArray<--"Primavera"
+        OTRO SI(opcion=7)
+        tipoArray<--"Invierno"
+        SINO
+        tipoArray<--"Completa"
+        FIN SI
+        matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
+        respuesta<--"Matriz de tipo: " + tipoArraymatrizSeleccionada
+    FIN SI
+cocacola
+ main
 FIN ALGORITMO
