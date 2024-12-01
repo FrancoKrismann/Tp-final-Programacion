@@ -146,7 +146,6 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
     FIN PARA
     FIN MODULO
 
-     
    MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
     ENTERO fila <-- año - 2014
     ENTERO columna <-- mes - 1
