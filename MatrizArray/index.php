@@ -81,3 +81,15 @@ function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
         echo "Carga manual completada.\n";
     }
 }
+{
+    echo "Menú de opciones:";
+    echo "1. Mostrar contenido de la matriz";
+    echo "2. Mostrar temperatura de un año y mes";
+    echo "3. Mostrar temperaturas de todos los meses de un año";
+    echo "4. Mostrar temperaturas de todos los años de un mes";
+    echo "5. Hallar máximas y mínimas";
+    echo "6. Datos de primavera";
+    echo "7. Datos de invierno";
+    echo "8. Mostrar matriz completa";
+    
+}
