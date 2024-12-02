@@ -70,7 +70,7 @@ do {
     echo "¿Desea continuar?(Si/No)";
     $continuar = trim(fgets(STDIN));
     
- } while($continuar = "Si");
+ } while($continuar == "Si");
 
 
 
