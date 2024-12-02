@@ -5,6 +5,9 @@ $matrizTemperatura = array_fill(0, 10, array_fill(0, 12, 0)); // Matriz 10x12 in
 $opcion;
 $continuar;
 $respuesta;
+$opcion;
+$continuar;
+$respuesta;
 // Arreglo de años
 $años = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 // Arreglo de meses

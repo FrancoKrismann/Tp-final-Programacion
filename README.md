@@ -1,16 +1,16 @@
-INICIO ALGORITMO
-ENTERO opcionUsuario,año
-STRING mes, tipoArray
-matrizTemperatura <-- [10][12]
-STRING cargTipo
-[]matrizSeleccionada
-años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
-meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    INICIO ALGORITMO
+    ENTERO opcion,año
+    STRING mes, tipoArray
+    matrizTemperatura <-- [10][12]
+    STRING cargTipo, continuar
+    []matrizSeleccionada
+    años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+    meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 
+    Repetir
     ESCRIBIR "Tipo de carga de Temperatura(Manual/Automatico)"
     LEER(cargTipo)
     tipoCarga(cargTipo, años, meses)
-
     // Menú de opciones
     ESCRIBIR "Menú de opciones:"
     ESCRIBIR "1. Mostrar contenido de la matriz"
@@ -21,102 +21,98 @@ meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agos
     ESCRIBIR "6. Datos de primavera"
     ESCRIBIR "7. Datos de invierno"
     ESCRIBIR "8. Mostrar matriz completa"
+    
+    LEER(opcion)   
 
-    LEER(opcionUsuario)
-
-   
-
-<!-- CONDIONES DE SEGUN LA OPCION ELEGIDA -->
-    SI (opción = 1) ENTONCES
+    SI (opcion = 1) ENTONCES
         <!-- Mostrar la matriz -->
-        PARA año = 0 HASTA 9 HACER
-            MOSTRAR "Año " + (año + 2014) + ": " + matrizTemperatura[año]
-        FIN PARA
-    OTRO-SI (opción = 2) ENTONCES
+             matrizCompleta <-- mostrarMatrizCompleta(matrizTemperatura, años)
+            mostrarMatriz(matrizCompleta,años)
+    OTRO-SI (opcion = 2) ENTONCES
         <!-- Mostrar temperatura de un año y mes -->
-        <!-- MODIFICARLO -->
-        LEER año, mes
-        MOSTRAR "Temperatura en " + (año) + " para el mes " + (mes) + " es: " + matrizTemperatura[año-2014][mes-1]
+                ESCRIBIR ("Ingrese el año")
+                LEER(año)
+                ESCRIBIR("Ingrese el mes")
+                LEER(mes)
+                tempEspecifica <--- mostrarTemperatura(temperaturas, año, mes)
+                mostrarMatriz(tempEspecifica ,años)
     OTRO-SI (opcion = 3) ENTONCES
         // Mostrar temperaturas de todos los meses de un año
-        LEER año
-        MOSTRAR "Temperaturas en el año " + año + ": " + matrizTemperatura[año-2014]
-    OTRO-SI (opción = 4) ENTONCES
+        ESCRIBIR "Ingrese el año:"
+        LEER(año)
+        tempAnual <-- mostrarTemperaturasAnuales()
+        mostrarMatriz(tempAnual, años)
+    OTRO-SI (opcion = 4) ENTONCES
         // Mostrar temperaturas de todos los años de un mes
-        LEER mes
-        PARA año = 0 HASTA 9 HACER
-            MOSTRAR "Temperatura en el mes " + mes + " del año " + (año+2014) + " es: " + matrizTemperatura[año][mes-1]
-        FIN PARA
-    OTRO-SI (opción = 5) ENTONCES 
+        Escribir "Ingrese el mes:"
+        LEER (mes)
+        tempMensual <-- mostrarTemperaturasMensuales()
+        mostrarMatriz(tempMensual,años)
+    OTRO-SI (opcion = 5) ENTONCES 
         // Hallar máximas y mínimas
-        maximo = -9999
-        minimo = 9999
-        PARA año = 0 HASTA 9 HACER
-            PARA mes = 0 HASTA 11 HACER
-                SI matrizTemperatura[año][mes] > maximo ENTONCES
-                    maximo = matrizTemperatura[año][mes]
-                    añoMaximo = año
-                    mesMaximo = mes
-                FIN SI
-                SI matrizTemperatura[año][mes] < minimo ENTONCES
-                    minimo = matrizTemperatura[año][mes]
-                    añoMinimo = año
-                    mesMinimo = mes
-                FIN SI
-            FIN PARA
-        FIN PARA
-        MOSTRAR "Máxima: " + maximo + " Año: " + (añoMaximo + 2014) + " Mes: " + (mesMaximo + 1)
-        MOSTRAR "Mínima: " + minimo + " Año: " + (añoMinimo + 2014) + " Mes: " + (mesMinimo + 1)
-    OTRO-SI( opcion = 6 OR opcion = 7 OR opcion = 8) ENTONCES
-        ESCRIBIR("Seleccione el tipo de matriz(COMPLETA/PRIMAVERA/INVIERNO)")
-        LEER(tipoArray)
-        matrizSeleccionada <-- tipoMatriz(tipoArray,años, matrizTemperatura)
-        ESCRIBIR("Matriz de tipo: " + tipoArray)
-        ESCRIBIR(matrizSeleccionada)
+        crearExtremos <-- hallarExtremos()
+        mostrarMatriz(crearExtremos, años)
+    OTRO-SI(opcion = 6) ENTONCES 
+       //Tipo matriz Primavera
+        matrizPrimavera <-- crearMatrizPrimavera(matrizTemperaturas)
+        mostrarMatriz(matrizPrimavera, años)
+    OTRO-SI(opcion = 7) ENTONCES 
+        //Tipo matrix Invierno
+        crearMatrizInvierno <-- crearMatrizPrimavera(matrizTemperaturas)
+        mostrarMatriz(crearMatrizInvierno, años)
+    
+    OTRO-SI(opcion = 8) ENTONCES
+          arregloAsociativo <-- crearArregloAsociativo(matrizTemperaturas)
+        mostrarArregloAsociativo(arregloAsociativo)
     FIN SI
 
+      Escribir respuesta
+      Escribir "Desea repetir?(s/n)"
+      HASTA (continuar = n)
+
+MODULOS:
+
+    MODULO mostrarMatriz(matriz, años)
+    cantMatriz <-- cant(matriz)
+    PARA i <-- 0 DESDE 0 HASTA cantMatriz  HACER          
+            PARA j <-- 0 DESDE 0 HASTA cantMatriz  HACER
+               ESCRIBIR( años[i], ": ", matriz[j])
+        FIN PARA
+    FIN PARA
+    FIN MODULO
 
 
-FIN
+    MODULO crearMatrizPrimavera([][]matrizTemperatura) RETORNA [][]ENTERO
+       matrizPrimavera[10][3]                                                                                                                                                    
+        PARA i <-- 0 DESDE 0 HASTA 9 PASO 1 HACER
+                matrizPrimavera[i][0] <-- matrizTemperatura[i][9]                                                                
+                matrizPrimavera[i][1] <-- matrizTemperatura[i][10]
+                matrizPrimavera[i][2] <-- matrizTemperatura[i][11]
+            FIN PARA
+            RETORNAR matrizPrimavera
+    FIN MODULO
 
-<!-- MODULO PARA CARGAR LA MATRIZ DE TEMPERATURAS -->
+    MODULO crearMatrizInvierno([][]matrizTemperatura) RETORNA [][]ENTERO
+      matrizInvierno[5][3]
+      PARA i <-- 4 DESDE 4 HASTA 9 PASO 1 HACER
+            PARA j <-- 0 DESDE 0 HASTA 4 PASO 1 HACER
+                matrizInvierno[j][0] <-- matrizTemperatura[i][9]                                                                
+                matrizInvierno[j][1] <-- matrizTemperatura[i][10]
+                matrizInvierno[j][2] <-- matrizTemperatura[i][11]
+            FIN PARA
+            RETORNAR matrizInvierno
+
+    FIN MODULO
 
  
-    MODULO tipoMatriz(STRING tipoMatriz, []años, [][]matrizTemperatura) RETORNA []
-        ENTERO dataOct, dataNov, dataDic, dataJul, data,Agost,dataSept
-        primavera <-- ["Primavera" --> []]
-        invierno <-- ["Invierno" --> []]
-        arrayMultiple <-- [ "Completa" --> [], "Primavera" --> [], "Invierno" --> []]
-        seleccionMatriz <-- []
-        <!-- Hasta 11 o 12? -->
-            PARA i <-- 0 DESDE 0 HASTA 11 PASO 1 HACER
-                dataOct <-- matrizTemperatura[i][9]
-                dataNov <-- matrizTemperatura[i][10]
-                dataDic <-- matrizTemperatura[i][11]
-                primavera["Primavera"][años[i]] = ["Octubre" => dataOct, "Noviembre" => dataNov, "Diciembre" => dataDic]
-            FIN PARA
-            PARA i <-- 5 DESDE 0 HASTA 11 PASO 1 HACER
-                dataJul <-- matrizTemperatura[i][6]
-                dataAgost <-- matrizTemperatura[i][7]
-                dataSept <-- matrizTemperatura[i][8]
-                primavera["Primavera"][años[i]] = ["Julio" => dataJul, "Octubre" => dataAgost, "Septiembre" => dataSept]
-            FIN PARA
-        
-        arrayMultiple["Completa"][] = matrizTemperatura
-        arrayMultiple["Primavera"][] = primavera["Primavera"][]
-        arrayMultiple["Invierno"][] = invierno["Invierno"][]
-        
-        Si (tipoMatriz == "Completa") ENTONCES 
-            seleccionMatriz <-- arrayMultiple["Completa"][]
-        OTRO-SI (tipoMatriz == "Primavera") ENTONCES 
-            seleccionMatriz <-- arrayMultiple["Primavera"][]
-        SINO
-            seleccionMatriz <-- arrayMultiple["Invierno"][]
-        FIN SI
-
-        RETORNA seleccionMatriz
-        
+    MODULO crearArregloAsociativo(matriz) RETORNA []ENTERO
+     []arreglo 
+    arreglo["Completa"] <-- matriz
+    arreglo["Primavera"] <-- crearMatrizPrimavera(matriz)
+    arreglo["Invierno"] <-- crearMatrizInvierno(matriz)
+    RETORNAR arreglo
     FIN MODULO
+
     
     MODULO tipoCarga(STRING tipo, []años, []meses, [][]matrizTemperatura)
 
@@ -153,4 +149,59 @@ FIN
 
     FIN MODULO
 
-FIN ALGORITMO
+    MODULO mostrarMatriz(MATRIZ matriz, STRING tipo)
+    ESCRIBIR "Matriz de tipo: " + tipo
+    PARA i = 0 HASTA LONGITUD(matriz) - 1 HACER
+        MOSTRAR matriz[i]
+    FIN PARA
+    FIN MODULO
+
+    MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
+    ENTERO fila <-- año - 2014
+    ENTERO columna <-- mes - 1
+    ESCRIBIR "Temperatura de " + año + " en el mes " + mes + ": " + temperaturas[fila][columna]
+    FIN MODULO
+
+
+    MODULO mostrarTemperaturasAnuales(MATRIZ temperaturas, ENTERO año)
+    ENTERO fila <-- año - 2014
+    ESCRIBIR "Temperaturas del año " + año + ": " + temperaturas[fila]
+    FIN MODULO
+
+
+    MODULO mostrarTemperaturasMensuales(MATRIZ temperaturas, ENTERO mes)
+    ENTERO columna <-- mes - 1
+    ENTERO suma <-- 0
+    PARA i = 0 HASTA 9 HACER
+        suma <-- suma + temperaturas[i][columna]
+        ESCRIBIR "Año " + (2014 + i) + ": " + temperaturas[i][columna]
+    FIN PARA
+    REAL promedio <-- suma / 10
+    ESCRIBIR "Promedio del mes " + mes + ": " + promedio
+    FIN MODULO
+
+    
+    MODULO hallarExtremos(MATRIZ temperaturas)
+    ENTERO max <-- -9999, min <-- 9999
+    ENTERO añoMax, mesMax, añoMin, mesMin
+    PARA i = 0 HASTA 9 HACER
+        PARA j = 0 HASTA 11 HACER
+            SI temperaturas[i][j] > max ENTONCES
+                max <-- temperaturas[i][j]
+                añoMax <-- i
+                mesMax <-- j
+            FIN SI
+            SI temperaturas[i][j] < min ENTONCES
+                min <-- temperaturas[i][j]
+                añoMin <-- i
+                mesMin <-- j
+            FIN SI
+        FIN PARA
+    FIN PARA
+    ESCRIBIR "Máximo: " + max + " Año: " + (2014 + añoMax) + " Mes: " + (mesMax + 1)
+    ESCRIBIR "Mínimo: " + min + " Año: " + (2014 + añoMin) + " Mes: " + (mesMin + 1)
+    FIN MODULO
+
+
+
+    FIN ALGORITMO
