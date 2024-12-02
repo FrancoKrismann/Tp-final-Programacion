@@ -175,15 +175,15 @@ function mostrarTemperaturasAnuales($matriz, $año) {
     return ["año" => [$año], "matriz" => $matrizAnual];
 }
 
-function mostrarTemperaturasMensuales($matriz, $mes, $mesesArray) {
-    $mesIndex = array_search($mes,  $mesesArray);
-    // $suma = 0;
-    // for ($i = 0; $i < 10; $i++) {
-    //     echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
-    //     $suma += $matriz[$i][$columna];
-    // }
-    // $promedio = $suma / 10;
-    // echo "Promedio del mes " . $mes . ": " . $promedio . "<br>";
+function mostrarTemperaturasMensuales($matriz, $mes) {
+    $columna = $mes;
+    $suma = 0;
+    for ($i = 0; $i < 10; $i++) {
+        echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
+        $suma += $matriz[$i][$columna];
+    }
+    $promedio = $suma / 10;
+    echo "Promedio del mes " . $mes . ": " . $promedio . "<br>";
 }
 
 function hallarExtremos($matriz) {
