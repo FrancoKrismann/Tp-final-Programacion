@@ -7,11 +7,12 @@
     años <-- arreglo[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
     meses <-- arreglo["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 
-    Repetir
+
     ESCRIBIR "Tipo de carga de Temperatura(Manual/Automatico)"
     LEER(cargTipo)
     tipoCarga(cargTipo, años, meses)
     // Menú de opciones
+  Repetir
     ESCRIBIR "Menú de opciones:"
     ESCRIBIR "1. Mostrar contenido de la matriz"
     ESCRIBIR "2. Mostrar temperatura de un año y mes"
@@ -66,9 +67,9 @@
         mostrarArregloAsociativo(arregloAsociativo)
     FIN SI
 
-      Escribir respuesta
-      Escribir "Desea repetir?(s/n)"
-      HASTA (continuar = n)
+ Escribir "Desea repetir?(Si/No)"
+ Leer (continuar)
+ HASTA (continuar = n)
 
 MODULOS:
 
@@ -158,7 +159,7 @@ MODULOS:
 
     MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
     ENTERO fila <-- año - 2014
-    ENTERO columna <-- mes - 1
+    ENTERO columna <-- mes 
     ESCRIBIR "Temperatura de " + año + " en el mes " + mes + ": " + temperaturas[fila][columna]
     FIN MODULO
 
@@ -170,7 +171,7 @@ MODULOS:
 
 
     MODULO mostrarTemperaturasMensuales(MATRIZ temperaturas, ENTERO mes)
-    ENTERO columna <-- mes - 1
+    ENTERO columna <-- mes 
     ENTERO suma <-- 0
     PARA i = 0 HASTA 9 HACER
         suma <-- suma + temperaturas[i][columna]
