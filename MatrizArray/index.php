@@ -42,13 +42,13 @@ do {
         // Mostrar temperaturas de todos los meses de un año
         echo "Ingrese el año: ";
         $año = intval(trim(fgets(STDIN)));
-        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año);
+        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año,$años,$meses);
         mostrarMatriz($tempAnual, $años,$meses);
     } elseif ($opcion == 4) {
         // Mostrar temperaturas de todos los años de un mes
         echo "Ingrese el mes: ";
         $mes = intval(trim(fgets(STDIN)));
-        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes);
+        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes,$años,$meses,$j);
         mostrarMatriz($tempMensual, $años,$meses);
     } elseif ($opcion == 5) {
         // Hallar máximas y mínimas
@@ -158,12 +158,16 @@ function mostrarTemperatura($matriz, $año, $mes) {
 }
 
 function mostrarTemperaturasAnuales($matriz, $año) {
+    $matrizAnual = [];
     $fila = $año - 2014;
-    echo "Temperaturas del año " . $año . ": " . implode(", ", $matriz[$fila]) . "<br>";
+    $matrizAnual = $matriz[$fila];
+    return $matrizAnual;    
+
 }
 
-function mostrarTemperaturasMensuales($matriz, $mes) {
-    $columna = $mes - 1;
+function mostrarTemperaturasMensuales($matriz, $mes, $años, $meses) {
+    mostrarMatriz($matriz, $años,$meses);
+    $columna = $mes;
     $suma = 0;
     for ($i = 0; $i < 10; $i++) {
         echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
