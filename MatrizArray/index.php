@@ -51,11 +51,10 @@ do {
         echo "Ingrese el mes: ";
         $mes = trim(fgets(STDIN));
         $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes, $meses);
-        mostrarMatriz($tempMensual, $años,$meses);
+        // mostrarMatriz($tempMensual, $años,$meses);
     } elseif ($opcion == 5) {
         // Hallar máximas y mínimas
         $crearExtremos = hallarExtremos($matrizTemperatura);
-        mostrarMatriz($crearExtremos, $años,$meses);
     } elseif ($opcion == 6) {
         // Tipo matriz Primavera
         $matrizPrimavera = crearMatrizPrimavera($matrizTemperatura);
@@ -175,15 +174,16 @@ function mostrarTemperaturasAnuales($matriz, $año) {
     return ["año" => [$año], "matriz" => $matrizAnual];
 }
 
-function mostrarTemperaturasMensuales($matriz, $mes) {
-    $columna = $mes;
+function mostrarTemperaturasMensuales($matriz, $mes, $mesesArray) {
+    $mesIndex = array_search($mes,  $mesesArray);
+
     $suma = 0;
     for ($i = 0; $i < 10; $i++) {
-        echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
-        $suma += $matriz[$i][$columna];
+        echo "Año " . (2014 + $i) . ": " . $matriz[$i][$mesIndex] . "\n";
+        $suma += $matriz[$i][$mesIndex];
     }
     $promedio = $suma / 10;
-    echo "Promedio del mes " . $mes . ": " . $promedio . "<br>";
+    echo "Promedio del mes " . $mes . ": " . $promedio . "\n";
 }
 
 function hallarExtremos($matriz) {
@@ -205,6 +205,6 @@ function hallarExtremos($matriz) {
             }
         }
     }
-    echo "Máximo: $max (Año: $añoMax, Mes: $mesMax)<br>";
-    echo "Mínimo: $min (Año: $añoMin, Mes: $mesMin)<br>";
+    echo "Máximo: $max (Año: $añoMax, Mes: $mesMax)\n";
+    echo "Mínimo: $min (Año: $añoMin, Mes: $mesMin)\n";
 }
