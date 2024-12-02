@@ -168,7 +168,7 @@ function mostrarTemperaturasAnuales($matriz, $año) {
 }
 
 function mostrarTemperaturasMensuales($matriz, $mes) {
-    $columna = $mes - 1;
+    $columna = $mes;
     $suma = 0;
     for ($i = 0; $i < 10; $i++) {
         echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
