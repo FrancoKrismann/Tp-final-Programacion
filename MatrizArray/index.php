@@ -49,8 +49,8 @@ do {
     } elseif ($opcion == 4) {
         // Mostrar temperaturas de todos los años de un mes
         echo "Ingrese el mes: ";
-        $mes = intval(trim(fgets(STDIN)));
-        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes);
+        $mes = trim(fgets(STDIN));
+        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes, $meses);
         mostrarMatriz($tempMensual, $años,$meses);
     } elseif ($opcion == 5) {
         // Hallar máximas y mínimas
@@ -67,7 +67,7 @@ do {
     } elseif ($opcion == 8) {
         // Arreglo asociativo
         $arregloAsociativo = crearArregloAsociativo($matrizTemperatura);
-        mostrarMatriz($arregloAsociativo, $años, $meses);
+        // mostrarMatriz($arregloAsociativo, $años, $meses);
     } 
     echo "¿Desea continuar?(Si/No)";
     $continuar = trim(fgets(STDIN));
@@ -117,7 +117,15 @@ function crearArregloAsociativo($matrizTemperatura) {
     $arreglo["Completa"] = $matrizTemperatura;
     $arreglo["Primavera"] = crearMatrizPrimavera($matrizTemperatura);
     $arreglo["Invierno"] = crearMatrizInvierno($matrizTemperatura);
-    return $arreglo;
+
+    echo "Matriz completa:\n";
+    print_r($arreglo["Completa"]);
+    
+    echo "\nMatriz de Primavera:\n";
+    print_r($arreglo["Primavera"]);
+
+    echo "\nMatriz de Invierno:\n";
+    print_r($arreglo["Invierno"]);
 }
 
 function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
