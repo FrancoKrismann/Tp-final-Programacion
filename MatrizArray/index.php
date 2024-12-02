@@ -5,6 +5,9 @@ $matrizTemperatura = array_fill(0, 10, array_fill(0, 12, 0)); // Matriz 10x12 in
 $opcion;
 $continuar;
 $respuesta;
+$opcion;
+$continuar;
+$respuesta;
 // Arreglo de años
 $años = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 // Arreglo de meses
@@ -33,22 +36,21 @@ do {
     } elseif ($opcion == 2) {
         // Mostrar temperatura de un año y mes
         echo "Ingrese el año: ";
-        $año = intval(trim(fgets(STDIN)));
+        $añoElegido = intval(trim(fgets(STDIN)));
         echo "Ingrese el mes: ";
-        $mes = intval(trim(fgets(STDIN)));
-        $tempEspecifica = mostrarTemperatura($matrizTemperatura, $año, $mes);
-        mostrarMatriz($tempEspecifica, $años,$meses);
+        $mesElegido = trim( fgets(STDIN));
+        $tempEspecifica = mostrarTemperatura( $matrizTemperatura, $añoElegido, $mesElegido, $meses,$años );
     } elseif ($opcion == 3) {
         // Mostrar temperaturas de todos los meses de un año
         echo "Ingrese el año: ";
         $año = intval(trim(fgets(STDIN)));
-        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año,$años,$meses);
-        mostrarMatriz($tempAnual, $años,$meses);
+        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año);
+        mostrarMatriz($tempAnual["matriz"], $tempAnual['año'],$meses);
     } elseif ($opcion == 4) {
         // Mostrar temperaturas de todos los años de un mes
         echo "Ingrese el mes: ";
         $mes = intval(trim(fgets(STDIN)));
-        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes,$años,$meses,$j);
+        $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes);
         mostrarMatriz($tempMensual, $años,$meses);
     } elseif ($opcion == 5) {
         // Hallar máximas y mínimas
@@ -57,7 +59,7 @@ do {
     } elseif ($opcion == 6) {
         // Tipo matriz Primavera
         $matrizPrimavera = crearMatrizPrimavera($matrizTemperatura);
-        mostrarMatriz($matrizPrimavera, $años,$meses);
+        mostrarMatriz($matrizPrimavera, $años ,$meses);
     } elseif ($opcion == 7) {
         // Tipo matriz Invierno
         $matrizInvierno = crearMatrizInvierno($matrizTemperatura);
@@ -70,13 +72,13 @@ do {
     echo "¿Desea continuar?(Si/No)";
     $continuar = trim(fgets(STDIN));
     
- } while($continuar == "Si");
+ } while($continuar !== "No");
 
 
 
 
 
- function mostrarMatriz($matriz, $años, $meses) {
+function mostrarMatriz($matriz, $años, $meses) {
     $cantMatriz = count($matriz);
     for ($i = 0; $i < $cantMatriz; $i++) {
         echo "Año: " . $años[$i];
@@ -151,23 +153,22 @@ function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
     }
 }
 
-function mostrarTemperatura($matriz, $año, $mes) {
-    $fila = $año - 2014;
-    $columna = $mes - 1;
-    echo "Temperatura de " . $año . " en el mes " . $mes . ": " . $matriz[$fila][$columna] . "<br>";
+function mostrarTemperatura($matriz, $añoElegido, $mesElegido, $mesesArray,$añoArray) {
+    $mesIndex = array_search($mesElegido,  $mesesArray);
+    $añoIndex = array_search($añoElegido, $añoArray);
+    echo "Temperatura de " . $añoElegido . " en el mes " . $mesElegido . ": " . $matriz[$añoIndex][$mesIndex] . "\n";
+
 }
 
 function mostrarTemperaturasAnuales($matriz, $año) {
     $matrizAnual = [];
     $fila = $año - 2014;
-    $matrizAnual = $matriz[$fila];
-    return $matrizAnual;    
-
+    $matrizAnual = [$matriz[$fila]];
+    return ["año" => [$año], "matriz" => $matrizAnual];
 }
 
-function mostrarTemperaturasMensuales($matriz, $mes, $años, $meses) {
-    mostrarMatriz($matriz, $años,$meses);
-    $columna = $mes;
+function mostrarTemperaturasMensuales($matriz, $mes) {
+    $columna = $mes - 1;
     $suma = 0;
     for ($i = 0; $i < 10; $i++) {
         echo "Año " . (2014 + $i) . ": " . $matriz[$i][$columna] . "<br>";
