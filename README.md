@@ -39,7 +39,7 @@
         ESCRIBIR "Ingrese el año:"
         LEER(año)
         tempAnual <-- mostrarTemperaturasAnuales()
-        mostrarMatriz(tempAnual, años)
+        tipoMatriz(tempAnual, años)
     OTRO-SI (opcion = 4) ENTONCES
         // Mostrar temperaturas de todos los años de un mes
         Escribir "Ingrese el mes:"
@@ -51,11 +51,11 @@
     OTRO-SI(opcion = 6) ENTONCES 
        //Tipo matriz Primavera
         matrizPrimavera <-- crearMatrizPrimavera(matrizTemperaturas)
-        mostrarMatriz(matrizPrimavera, años)
+        tipoMatriz(matrizPrimavera, años)
     OTRO-SI(opcion = 7) ENTONCES 
         //Tipo matrix Invierno
         crearMatrizInvierno <-- crearMatrizPrimavera(matrizTemperaturas)
-        mostrarMatriz(crearMatrizInvierno, años)
+        tipoMatriz(crearMatrizInvierno, años)
     
     OTRO-SI(opcion = 8) ENTONCES
           arregloAsociativo <-- crearArregloAsociativo(matrizTemperaturas)
@@ -67,12 +67,23 @@
 
 MODULOS:
 
-    MODULO mostrarMatriz(matriz, años)
+    MODULO tipoMatriz(matriz, años)
     cantMatriz <-- cant(matriz)
      PARA i <-- 0 DESDE 0 HASTA cantMatriz PASO 1 HACER
         ESCRIBIR( "Año: " + fila["Año"])
         PARA CADA mes, valor EN fila["Meses"]
             ESCRIBIR(" | Mes: " + mes + ": " + valor)
+        FIN PARA
+    FIN PARA
+    FIN MODULO
+
+    MODULO mostrarMatrizCompleta([][]ENTERO matriz, []ENTERO años, []STRING meses)
+         cantMatriz ← longitud(matriz)  
+
+    PARA i DESDE 0 HASTA cantMatriz - 1 HACER
+        ESCRIBIR( "Año: " + años[i])  
+        PARA j DESDE 0 HASTA longitud(matriz[i]) - 1 HACER
+            ESCRIBIR( " | Mes: " + meses[j] + ": " + matriz[i][j])
         FIN PARA
     FIN PARA
     FIN MODULO
@@ -141,13 +152,13 @@ MODULOS:
     arreglo["Primavera"] = crearMatrizPrimavera(matrizTemperatura, años)
     arreglo["Invierno"] = crearMatrizInvierno(matrizTemperatura, años)
     ESCRIBIR "Matriz completa:"
-    mostrarMatriz(arreglo["Completa"])
+    tipoMatriz(arreglo["Completa"])
     
     ESCRIBIR "Matriz de Primavera:"
-    mostrarMatriz(arreglo["Primavera"])
+    tipoMatriz(arreglo["Primavera"])
 
     ESCRIBIR "Matriz de Invierno:"
-    mostrarMatriz(arreglo["Invierno"])
+    tipoMatriz(arreglo["Invierno"])
 
     FIN MODULO
 
