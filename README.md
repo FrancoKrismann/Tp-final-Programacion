@@ -69,49 +69,85 @@ MODULOS:
 
     MODULO mostrarMatriz(matriz, años)
     cantMatriz <-- cant(matriz)
-    PARA i <-- 0 DESDE 0 HASTA cantMatriz  HACER          
-            PARA j <-- 0 DESDE 0 HASTA cantMatriz  HACER
-               ESCRIBIR( años[i], ": ", matriz[j])
+     PARA i <-- 0 DESDE 0 HASTA cantMatriz PASO 1 HACER
+        ESCRIBIR( "Año: " + fila["Año"])
+        PARA CADA mes, valor EN fila["Meses"]
+            ESCRIBIR(" | Mes: " + mes + ": " + valor)
         FIN PARA
     FIN PARA
     FIN MODULO
 
 
-    MODULO crearMatrizPrimavera(ENTERO [][]matrizTemperatura) RETORNA ENTERO [][]
-       matrizPrimavera[10][3]                                  
+    MODULO crearMatrizPrimavera(ENTERO [][]matrizTemperatura, []ENTEROS años) RETORNA ENTERO [][]
+       matrizPrimavera[10][3]
+       []meses
         PARA i <-- 0 DESDE 0 HASTA 9 PASO 1 HACER
-                matrizPrimavera[i][0] <-- matrizTemperatura[i][9]                                                                
-                matrizPrimavera[i][1] <-- matrizTemperatura[i][10]
-                matrizPrimavera[i][2] <-- matrizTemperatura[i][11]
+        meses = [
+            "Octubre": matrizTemperatura[i][9],
+            "Noviembre": matrizTemperatura[i][10],
+            "Diciembre": matrizTemperatura[i][11]
+        ]
+       matrizPrimavera <-- ["Año": años[i], "Meses": meses] 
             FIN PARA
             RETORNAR matrizPrimavera
     FIN MODULO
 
-    MODULO crearMatrizInvierno([][]matrizTemperatura) RETORNA [][]ENTERO
+    MODULO crearMatrizInvierno([][]matrizTemperatura,[]ENTEROS años) RETORNA [][]ENTERO
       matrizInvierno[5][3]
-      PARA i <-- 4 DESDE 4 HASTA 9 PASO 1 HACER
-            PARA j <-- 0 DESDE 0 HASTA 4 PASO 1 HACER
-                matrizInvierno[j][0] <-- matrizTemperatura[i][9]                                                                
-                matrizInvierno[j][1] <-- matrizTemperatura[i][10]
-                matrizInvierno[j][2] <-- matrizTemperatura[i][11]
+      []meses
+       PARA i DESDE 5 HASTA 9
+        INICIAR meses COMO DICCIONARIO
+        meses = {
+            "Julio": matrizTemperatura[i][6],
+            "Agosto": matrizTemperatura[i][7],
+            "Septiembre": matrizTemperatura[i][8]
+        }
+
+        matrizInvierno <-- ["Año": años[i], "Meses": meses] 
             FIN PARA
             RETORNAR matrizInvierno
     FIN MODULO
 
+    MODULO crearMatrizCompleta([][]ENTERO matrizTemperatura, [] ENTERO años)
+    []matrizCompleta 
+    []meses
+
+    PARA i DESDE 0 HASTA tamaño(matrizTemperatura) - 1
+        meses = {
+            "Enero": matrizTemperatura[i][0],
+            "Febrero": matrizTemperatura[i][1],
+            "Marzo": matrizTemperatura[i][2],
+            "Abril": matrizTemperatura[i][3],
+            "Mayo": matrizTemperatura[i][4],
+            "Junio": matrizTemperatura[i][5],
+            "Julio": matrizTemperatura[i][6],
+            "Agosto": matrizTemperatura[i][7],
+            "Septiembre": matrizTemperatura[i][8],
+            "Octubre": matrizTemperatura[i][9],
+            "Noviembre": matrizTemperatura[i][10],
+            "Diciembre": matrizTemperatura[i][11]
+        }
+
+        matrizCompleta <-- ["Año": años[i], "Meses": meses] 
+    FIN PARA
+    RETORNAR matrizCompleta
+    FIN MODULO
+
+
  
-    MODULO crearArregloAsociativo(matriz) RETORNA []ENTERO
+    MODULO crearArregloAsociativo([][]ENTERO matriz, []ENTERO años) RETORNA []ENTERO
      []arreglo 
-    arreglo["Completa"] <-- matriz
-    arreglo["Primavera"] <-- crearMatrizPrimavera(matriz)
-    arreglo["Invierno"] <-- crearMatrizInvierno(matriz)
+     arreglo["Completa"] = crearMatrizCompleta(matrizTemperatura, años)
+    arreglo["Primavera"] = crearMatrizPrimavera(matrizTemperatura, años)
+    arreglo["Invierno"] = crearMatrizInvierno(matrizTemperatura, años)
     ESCRIBIR "Matriz completa:"
-    ESCRIBIR arreglo["Completa"]
+    mostrarMatriz(arreglo["Completa"])
     
     ESCRIBIR "Matriz de Primavera:"
-    ESCRIBIR arreglo["Primavera"]
+    mostrarMatriz(arreglo["Primavera"])
 
     ESCRIBIR "Matriz de Invierno:"
-    ESCRIBIR arreglo["Invierno"]
+    mostrarMatriz(arreglo["Invierno"])
 
     FIN MODULO
 
@@ -161,16 +197,39 @@ MODULOS:
     Fin Para
     FIN MODULO
 
-    MODULO mostrarTemperatura(MATRIZ temperaturas, ENTERO año, ENTERO mes)
+    MODULO mostrarTemperatura([][]ENTERO matriz, ENTERO año, ENTERO mes)
      mesIndex ← buscarIndice(mesElegido, mesesArray)
     añoIndex ← buscarIndice(añoElegido, añoArray)
     Mostrar "Temperatura de " + añoElegido + " en el mes " + mesElegido + ": " + matriz[añoIndex][mesIndex]
     FIN MODULO
 
 
-    MODULO mostrarTemperaturasAnuales(MATRIZ temperaturas, ENTERO año)
+    MODULO mostrarTemperaturasAnuales([][]ENTERO matriz, ENTERO año)
+    []matrizAnual
     ENTERO fila <-- año - 2014
-    ESCRIBIR "Temperaturas del año " + año + ": " + temperaturas[fila]
+    valoresAnuales <-- matriz[fila]
+    []meses
+    meses <-- [
+        "Enero": valoresAnuales[0],
+        "Febrero": valoresAnuales[1],
+        "Marzo": valoresAnuales[2],
+        "Abril": valoresAnuales[3],
+        "Mayo": valoresAnuales[4],
+        "Junio": valoresAnuales[5],
+        "Julio": valoresAnuales[6],
+        "Agosto": valoresAnuales[7],
+        "Septiembre": valoresAnuales[8],
+        "Octubre": valoresAnuales[9],
+        "Noviembre": valoresAnuales[10],
+        "Diciembre": valoresAnuales[11]
+    ]
+    matrizAnual <-- [
+        [
+            "Año": año,
+            "Meses": meses
+        ]
+    ]
+    RETORNAR matrizAnual
     FIN MODULO
 
 
