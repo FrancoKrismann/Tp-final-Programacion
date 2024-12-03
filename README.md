@@ -34,28 +34,35 @@
                 ESCRIBIR("Ingrese el mes")
                 LEER(mes)
                 tempEspecifica <--- mostrarTemperatura(temperaturas, año, mes)
+                SI(tempEspecifica) ENTONCES
+                ESCRIBIR(tempEspecifica)
+                FIN SI
     OTRO-SI (opcion = 3) ENTONCES
         // Mostrar temperaturas de todos los meses de un año
         ESCRIBIR "Ingrese el año:"
         LEER(año)
-        tempAnual <-- mostrarTemperaturasAnuales()
+        tempAnual <-- mostrarTemperaturasAnuales(matrizTemperatura, año, años)
+        SI NOT(IS_ARRAY(tempAnual)) ENTONCES
+            ESCRIBIR(tempAnual)
+        SINO
         tipoMatriz(tempAnual, años)
+        FIN SI
     OTRO-SI (opcion = 4) ENTONCES
         // Mostrar temperaturas de todos los años de un mes
         Escribir "Ingrese el mes:"
         LEER (mes)
-        tempMensual <-- mostrarTemperaturasMensuales()
+        tempMensual <-- mostrarTemperaturasMensuales(matrizTemperatura, mes, meses)
     OTRO-SI (opcion = 5) ENTONCES 
         // Hallar máximas y mínimas
-        crearExtremos <-- hallarExtremos()
+        crearExtremos <-- hallarExtremos(matrizTemperatura)
     OTRO-SI(opcion = 6) ENTONCES 
        //Tipo matriz Primavera
-        matrizPrimavera <-- crearMatrizPrimavera(matrizTemperaturas)
-        tipoMatriz(matrizPrimavera, años)
+        matrizPrimavera <-- crearMatrizPrimavera(matrizTemperaturas, años)
+        tipoMatriz(matrizPrimavera, años, meses)
     OTRO-SI(opcion = 7) ENTONCES 
         //Tipo matrix Invierno
-        crearMatrizInvierno <-- crearMatrizPrimavera(matrizTemperaturas)
-        tipoMatriz(crearMatrizInvierno, años)
+        crearMatrizInvierno <-- crearMatrizPrimavera(matrizTemperaturas, años)
+        tipoMatriz(crearMatrizInvierno, años, meses)
     
     OTRO-SI(opcion = 8) ENTONCES
           arregloAsociativo <-- crearArregloAsociativo(matrizTemperaturas)
@@ -208,15 +215,23 @@ MODULOS:
     Fin Para
     FIN MODULO
 
-    MODULO mostrarTemperatura([][]ENTERO matriz, ENTERO año, ENTERO mes)
+    MODULO mostrarTemperatura([][]ENTERO matriz, ENTERO añoElegido, ENTERO mesElegido,[]ENTERO años, []STRING meses)
+     SI NOT(IN_ARRAY(añoElegido,años)) ENTONCES
+         RETORNA ESCRIBIR("Año incorrecto: " + añoElegido)
+     OTRO-SI NOT(IN_ARRAY(mesElegido, meses)) ENTONCES
+         RETORNA ESCRIBIR("Mes incorrecto: " + mesElegido)
+     FIN SI
      mesIndex ← buscarIndice(mesElegido, mesesArray)
     añoIndex ← buscarIndice(añoElegido, añoArray)
     Mostrar "Temperatura de " + añoElegido + " en el mes " + mesElegido + ": " + matriz[añoIndex][mesIndex]
     FIN MODULO
 
 
-    MODULO mostrarTemperaturasAnuales([][]ENTERO matriz, ENTERO año)
+    MODULO mostrarTemperaturasAnuales([][]ENTERO matriz, ENTERO añoElegido, []ENTERO años)
     []matrizAnual
+    SI NOT(IN_ARRAY(añoElegido,años)) ENTONCES
+         RETORNA ESCRIBIR("Año incorrecto: " + añoElegido)
+    FIN SI
     ENTERO fila <-- año - 2014
     valoresAnuales <-- matriz[fila]
     []meses
@@ -244,7 +259,12 @@ MODULOS:
     FIN MODULO
 
 
-    MODULO mostrarTemperaturasMensuales(MATRIZ temperaturas, ENTERO mes)
+    MODULO mostrarTemperaturasMensuales([][]ENTEROS matriz, ENTERO mes,[]STRING mesesArray)
+    
+    SI NOT(IN_ARRAY(mes,mesesArray)) ENTONCES
+         RETORNA ESCRIBIR("Año incorrecto: " + añoElegido)
+    FIN SI
+    
     mesIndex ← buscarIndice(mes, mesesArray)
     suma ← 0
     Para i desde 0 hasta 9 hacer
