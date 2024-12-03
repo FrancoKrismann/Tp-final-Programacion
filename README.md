@@ -1,3 +1,5 @@
+guillermo.guerrero@est.fi.uncoma.edu.ar
+
     INICIO ALGORITMO
     ENTERO opcion,año
     STRING mes, tipoArray
