@@ -4,10 +4,6 @@
 $matrizTemperatura = array_fill(0, 10, array_fill(0, 12, 0)); // Matriz 10x12 inicializada con ceros
 $opcion;
 $continuar;
-$respuesta;
-$opcion;
-$continuar;
-$respuesta;
 // Arreglo de años
 $años = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 // Arreglo de meses
@@ -32,41 +28,46 @@ do {
     $opcion = trim(fgets(STDIN));
     if ($opcion == 1) {
         // Mostrar la matriz completa
-        mostrarMatriz($matrizTemperatura, $años,$meses);
+        mostrarMatrizCompleta($matrizTemperatura,$años, $meses);
     } elseif ($opcion == 2) {
         // Mostrar temperatura de un año y mes
         echo "Ingrese el año: ";
         $añoElegido = intval(trim(fgets(STDIN)));
-        echo "Ingrese el mes: ";
+        echo "Ingrese el mes(el mes debe contener primera letra mayuscula): ";
         $mesElegido = trim( fgets(STDIN));
         $tempEspecifica = mostrarTemperatura( $matrizTemperatura, $añoElegido, $mesElegido, $meses,$años );
+        if($tempEspecifica){
+            echo $tempEspecifica;
+        }
     } elseif ($opcion == 3) {
         // Mostrar temperaturas de todos los meses de un año
         echo "Ingrese el año: ";
         $año = intval(trim(fgets(STDIN)));
-        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año);
-        mostrarMatriz($tempAnual["matriz"], $tempAnual['año'],$meses);
+        $tempAnual = mostrarTemperaturasAnuales($matrizTemperatura, $año, $años);
+        if(!is_array($tempAnual)){
+            echo $tempAnual;
+        } else{
+            tipoMatriz($tempAnual);
+        }
     } elseif ($opcion == 4) {
         // Mostrar temperaturas de todos los años de un mes
         echo "Ingrese el mes: ";
         $mes = trim(fgets(STDIN));
         $tempMensual = mostrarTemperaturasMensuales($matrizTemperatura, $mes, $meses);
-        // mostrarMatriz($tempMensual, $años,$meses);
     } elseif ($opcion == 5) {
         // Hallar máximas y mínimas
         $crearExtremos = hallarExtremos($matrizTemperatura);
     } elseif ($opcion == 6) {
         // Tipo matriz Primavera
-        $matrizPrimavera = crearMatrizPrimavera($matrizTemperatura);
-        mostrarMatriz($matrizPrimavera, $años ,$meses);
+        $matrizPrimavera = crearMatrizPrimavera($matrizTemperatura, $años);
+        tipoMatriz($matrizPrimavera, $años ,$meses);
     } elseif ($opcion == 7) {
         // Tipo matriz Invierno
-        $matrizInvierno = crearMatrizInvierno($matrizTemperatura);
-        mostrarMatriz($matrizInvierno, $años, $meses);
+        $matrizInvierno = crearMatrizInvierno($matrizTemperatura,$años);
+        tipoMatriz($matrizInvierno, $años, $meses);
     } elseif ($opcion == 8) {
         // Arreglo asociativo
-        $arregloAsociativo = crearArregloAsociativo($matrizTemperatura);
-        // mostrarMatriz($arregloAsociativo, $años, $meses);
+        $arregloAsociativo = crearArregloAsociativo($matrizTemperatura,$años);
     } 
     echo "¿Desea continuar?(Si/No)";
     $continuar = trim(fgets(STDIN));
@@ -77,7 +78,18 @@ do {
 
 
 
-function mostrarMatriz($matriz, $años, $meses) {
+ function tipoMatriz($matriz) {
+    $cantMatriz = count($matriz);
+    for ($i = 0; $i < $cantMatriz; $i++) {
+        echo "Año: " . $matriz[$i]["Año"] . "\n"; // Accede al año directamente
+        foreach ($matriz[$i]["Meses"] as $mes => $valor) { // Itera sobre los meses
+            echo " | Mes: " . $mes . ": " . $valor . "\n";
+        }
+        echo "\n"; // Separador entre años
+    }
+}
+
+function mostrarMatrizCompleta($matriz, $años, $meses) {
     $cantMatriz = count($matriz);
     for ($i = 0; $i < $cantMatriz; $i++) {
         echo "Año: " . $años[$i];
@@ -87,44 +99,75 @@ function mostrarMatriz($matriz, $años, $meses) {
     }
 }
 
-function crearMatrizPrimavera($matrizTemperatura) {
+
+function crearMatrizPrimavera($matrizTemperatura,$años) {
     $matrizPrimavera = [];
     for ($i = 0; $i < 10; $i++) {
-        $matrizPrimavera[$i] = [
-            $matrizTemperatura[$i][9],  // Octubre
-            $matrizTemperatura[$i][10], // Noviembre
-            $matrizTemperatura[$i][11]  // Diciembre
+        $matrizPrimavera[] = [
+            "Año" => $años[$i],
+            "Meses" => [
+                "Octubre" => $matrizTemperatura[$i][9],
+                "Noviembre" => $matrizTemperatura[$i][10],
+                "Diciembre" => $matrizTemperatura[$i][11]
+            ]
         ];
     }
     return $matrizPrimavera;
 }
 
-function crearMatrizInvierno($matrizTemperatura) {
+function crearMatrizInvierno($matrizTemperatura, $años) {
     $matrizInvierno = [];
     for ($i = 5, $j = 0; $i < 10; $i++, $j++) {
-        $matrizInvierno[$j] = [
-            $matrizTemperatura[$i][6],  // Julio
-            $matrizTemperatura[$i][7],  // Agosto
-            $matrizTemperatura[$i][8]   // Septiembre
+        $matrizInvierno[] = [
+            "Año" => $años[$i],
+            "Meses" => [
+                "Julio" => $matrizTemperatura[$i][6],
+                "Agosto" => $matrizTemperatura[$i][7],
+                "Septiembre" => $matrizTemperatura[$i][8]
+            ]
         ];
     }
     return $matrizInvierno;
 }
+function crearMatrizCompleta($matrizTemperatura, $años) {
+    $matrizCompleta = [];
+    foreach ($matrizTemperatura as $i => $valores) {
+        $meses = [
+            "Enero" => $valores[0],
+            "Febrero" => $valores[1],
+            "Marzo" => $valores[2],
+            "Abril" => $valores[3],
+            "Mayo" => $valores[4],
+            "Junio" => $valores[5],
+            "Julio" => $valores[6],
+            "Agosto" => $valores[7],
+            "Septiembre" => $valores[8],
+            "Octubre" => $valores[9],
+            "Noviembre" => $valores[10],
+            "Diciembre" => $valores[11],
+        ];
+        $matrizCompleta[] = ["Año" => $años[$i], "Meses" => $meses];
+    }
+    return $matrizCompleta;
+}
 
-function crearArregloAsociativo($matrizTemperatura) {
+function crearArregloAsociativo($matrizTemperatura,$años) {
     $arreglo = [];
-    $arreglo["Completa"] = $matrizTemperatura;
-    $arreglo["Primavera"] = crearMatrizPrimavera($matrizTemperatura);
-    $arreglo["Invierno"] = crearMatrizInvierno($matrizTemperatura);
+    $arreglo["Completa"] = crearMatrizCompleta($matrizTemperatura, $años);
+    $arreglo["Primavera"] = crearMatrizPrimavera($matrizTemperatura, $años);
+    $arreglo["Invierno"] = crearMatrizInvierno($matrizTemperatura, $años);
 
-    echo "Matriz completa:\n";
-    print_r($arreglo["Completa"]);
+    // Mostrar matrices para depuración
+    echo "Matriz Completa:\n";
+    tipoMatriz($arreglo["Completa"]);
     
     echo "\nMatriz de Primavera:\n";
-    print_r($arreglo["Primavera"]);
+    tipoMatriz($arreglo["Primavera"]);
 
     echo "\nMatriz de Invierno:\n";
-    print_r($arreglo["Invierno"]);
+    tipoMatriz($arreglo["Invierno"]);
+
+    return $arreglo;
 }
 
 function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
@@ -161,21 +204,61 @@ function tipoCarga($tipo, $años, $meses, &$matrizTemperatura) {
 }
 
 function mostrarTemperatura($matriz, $añoElegido, $mesElegido, $mesesArray,$añoArray) {
+
+    if (!in_array($añoElegido, $añoArray)) {
+        return "Año incorrecto: " . $añoElegido ."\n";
+    }
+    if (!in_array($mesElegido, $mesesArray)){
+        return "mes incorrecto: " .$mesElegido ."\n";
+    }
     $mesIndex = array_search($mesElegido,  $mesesArray);
     $añoIndex = array_search($añoElegido, $añoArray);
     echo "Temperatura de " . $añoElegido . " en el mes " . $mesElegido . ": " . $matriz[$añoIndex][$mesIndex] . "\n";
 
 }
 
-function mostrarTemperaturasAnuales($matriz, $año) {
+function mostrarTemperaturasAnuales($matriz, $año, $añosArray) {
+
+    if (!in_array($año, $añosArray)) {
+        return "Año incorrecto: " . $año ."\n";
+    }
     $matrizAnual = [];
     $fila = $año - 2014;
-    $matrizAnual = [$matriz[$fila]];
-    return ["año" => [$año], "matriz" => $matrizAnual];
+    $valoresAnuales = $matriz[$fila];
+    
+    // Crear un diccionario de meses con sus valores correspondientes
+    $meses = [
+        "Enero" => $valoresAnuales[0],
+        "Febrero" => $valoresAnuales[1],
+        "Marzo" => $valoresAnuales[2],
+        "Abril" => $valoresAnuales[3],
+        "Mayo" => $valoresAnuales[4],
+        "Junio" => $valoresAnuales[5],
+        "Julio" => $valoresAnuales[6],
+        "Agosto" => $valoresAnuales[7],
+        "Septiembre" => $valoresAnuales[8],
+        "Octubre" => $valoresAnuales[9],
+        "Noviembre" => $valoresAnuales[10],
+        "Diciembre" => $valoresAnuales[11],
+    ];
+    
+    // Estructurar la matriz anual en el formato esperado por mostrarMatriz
+    $matrizAnual = [
+        [
+            "Año" => $año,
+            "Meses" => $meses
+        ]
+    ];
+    return $matrizAnual;
 }
 
 function mostrarTemperaturasMensuales($matriz, $mes, $mesesArray) {
+
     $mesIndex = array_search($mes,  $mesesArray);
+    if (!in_array($mes, $mesesArray)){
+        echo "mes incorrecto: " .$mes ."\n";
+        return;
+    }
 
     $suma = 0;
     for ($i = 0; $i < 10; $i++) {
